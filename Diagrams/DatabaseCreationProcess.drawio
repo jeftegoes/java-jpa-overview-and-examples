@@ -1,0 +1,33 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.8 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.8">
+  <diagram name="Page-1" id="1RyHNyuM6exVRnd9L_AG">
+    <mxGraphModel dx="757" dy="681" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="CkvCZUxDh1_Gt0EsddAL-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.027;entryY=0.498;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="CkvCZUxDh1_Gt0EsddAL-2" target="CkvCZUxDh1_Gt0EsddAL-10">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="310" y="345" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CkvCZUxDh1_Gt0EsddAL-2" value="Your Java APP" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="90" y="315" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="CkvCZUxDh1_Gt0EsddAL-6" value="Database" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="610" y="305" width="60" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="CkvCZUxDh1_Gt0EsddAL-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="CkvCZUxDh1_Gt0EsddAL-10" target="CkvCZUxDh1_Gt0EsddAL-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="CkvCZUxDh1_Gt0EsddAL-10" value="JPA/Hibernate" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#00BEF2;shape=mxgraph.azure.automation;pointerEvents=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="313" width="71.11" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="CkvCZUxDh1_Gt0EsddAL-16" value="SQL" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;fillColor=#505050;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;outlineConnect=0;align=center;shape=mxgraph.office.concepts.script;" vertex="1" parent="1">
+          <mxGeometry x="480" y="320.5" width="53" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="CkvCZUxDh1_Gt0EsddAL-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="CkvCZUxDh1_Gt0EsddAL-16" target="CkvCZUxDh1_Gt0EsddAL-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
