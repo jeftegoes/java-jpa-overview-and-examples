@@ -1,4 +1,4 @@
-package com.example.jpa_advanced_mappings;
+package com.example;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
