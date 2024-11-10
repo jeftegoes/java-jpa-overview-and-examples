@@ -34,8 +34,25 @@ public class JpaAdvancedMappingsApplication {
 //            updateTeacher(appDAO);
 //            updateCourse(appDAO);
 //            deleteCourse(appDAO);
-            createCourseAndReviews(appDAO);
+//            createCourseAndReviews(appDAO);
+//            findCourseAndReviewsByCourseId(appDAO);
+//            deleteCourseAndReviews(appDAO);
         };
+    }
+
+    private void deleteCourseAndReviews(AppDAO appDAO) {
+        int courseId = 1;
+
+        appDAO.deleteCourse(courseId);
+    }
+
+    private void findCourseAndReviewsByCourseId(AppDAO appDAO) {
+        int courseId = 1;
+
+        Course course = appDAO.findCourseAndReviewsByCourseId(courseId);
+
+        System.out.println(course);
+        System.out.println(course.getReviews());
     }
 
     private void createCourseAndReviews(AppDAO appDAO) {
