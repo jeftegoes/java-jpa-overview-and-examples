@@ -2,6 +2,7 @@ package com.example.real_jpa_entity_relationships.repositories;
 
 import com.example.real_jpa_entity_relationships.models.Subject;
 import com.example.real_jpa_entity_relationships.models.Student;
+import com.example.real_jpa_entity_relationships.models.SubjectStudent;
 import com.example.real_jpa_entity_relationships.models.Teacher;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -20,43 +21,37 @@ public class SubjectStudentRepository {
         this.entityManager = entityManager;
     }
 
-
-    public List<Subject> getAll() {
-        TypedQuery<Subject> query = entityManager.createQuery("SELECT d FROM Discipline d", Subject.class);
+    public List<SubjectStudent> getAll() {
+        TypedQuery<SubjectStudent> query = entityManager.createQuery("SELECT d FROM SubjectStudent d", SubjectStudent.class);
 
         return query.getResultList();
     }
 
-    public Subject findById(int id) {
-        return entityManager.find(Subject.class, id);
+    public SubjectStudent findById(int id) {
+        return entityManager.find(SubjectStudent.class, id);
     }
 
     @Transactional
-    public void save(int disciplineId, int studentId) {
-        Subject subject = entityManager.find(Subject.class, disciplineId);
-        Student student = entityManager.find(Student.class, studentId);
-
-//        student.addDiscipline(discipline);
-
-        entityManager.persist(subject);
+    public void save(SubjectStudent subjectStudent) {
+        entityManager.persist(subjectStudent);
     }
 
     @Transactional
     public void delete(int id) {
-        Subject subject = entityManager.find(Subject.class, id);
+        SubjectStudent subject = entityManager.find(SubjectStudent.class, id);
 
         entityManager.remove(subject);
     }
 
     @Transactional
-    public void update(int id, Subject subject) {
-        Subject subjectInDb = entityManager.find(Subject.class, id);
-        Teacher teacher = entityManager.find(Teacher.class, subject.getTeacher().getId());
+    public void update(int id, SubjectStudent subjectStudent) {
+        SubjectStudent subjectStudentInDb = entityManager.find(SubjectStudent.class, id);
+        Subject subject = entityManager.find(Subject.class, subjectStudent.getSubject().getId());
+        Student student = entityManager.find(Student.class, subjectStudent.getStudent().getId());
 
-        subjectInDb.setName(subject.getName());
-        subjectInDb.setHours(subject.getHours());
-        subjectInDb.setTeacher(teacher);
+        subjectStudentInDb.setSubject(subject);
+        subjectStudentInDb.setStudent(student);
 
-        entityManager.merge(subjectInDb);
+        entityManager.merge(subjectStudentInDb);
     }
 }

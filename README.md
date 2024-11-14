@@ -22,7 +22,7 @@
     - [3.4.1. Custom Strategies](#341-custom-strategies)
 - [4. DAO - Data Access Object](#4-dao---data-access-object)
   - [4.1. JPA Entity Manager](#41-jpa-entity-manager)
-  - [4.2. What about JpaRepository???](#42-what-about-jparepository)
+  - [4.2. What about JpaRepository?](#42-what-about-jparepository)
     - [4.2.1. Which One EntityManager or JpaRepository?](#421-which-one-entitymanager-or-jparepository)
     - [4.2.2. My Recommendation](#422-my-recommendation)
 - [5. Spring @Transactional](#5-spring-transactional)
@@ -36,6 +36,29 @@
   - [8.3. Basic Projects](#83-basic-projects)
   - [8.4. Use Case](#84-use-case)
   - [8.5. Recommendation](#85-recommendation)
+- [9. Advanced Mappings](#9-advanced-mappings)
+  - [9.1. One-to-One](#91-one-to-one)
+  - [9.2. One-to-Many](#92-one-to-many)
+    - [9.2.1. Many-to-One](#921-many-to-one)
+  - [9.3. Many-to-Many](#93-many-to-many)
+- [10. Important Database Concepts](#10-important-database-concepts)
+  - [10.1. Primary Key and Foreign Key](#101-primary-key-and-foreign-key)
+  - [10.2. Cascade](#102-cascade)
+    - [10.2.1. Cascade Types](#1021-cascade-types)
+  - [10.3. Fetch Types: Eager vs Lazy Loading](#103-fetch-types-eager-vs-lazy-loading)
+  - [10.4. Fetch](#104-fetch)
+  - [10.5. Default Fetch Types](#105-default-fetch-types)
+  - [10.6. Overriding Default Fetch Type](#106-overriding-default-fetch-type)
+    - [10.6.1. Best Practice](#1061-best-practice)
+  - [10.7. Uni-Directional](#107-uni-directional)
+  - [10.8. Bi-Directional](#108-bi-directional)
+- [11. Entity Lifecycle](#11-entity-lifecycle)
+  - [11.1. Entity Lifecycle - session method calls](#111-entity-lifecycle---session-method-calls)
+- [12. More on mappedBy](#12-more-on-mappedby)
+- [13. Fetch Type](#13-fetch-type)
+- [14. @JoinTable](#14-jointable)
+  - [14.1. More on "inverse"](#141-more-on-inverse)
+- [15. Common Errors](#15-common-errors)
 
 # 1. What is Hibernate?
 
@@ -226,7 +249,7 @@
   - Based on the file: `application.properties` (JDBC URL, user id, password, etc ...)
 - We can autowire/inject the JPA Entity Manager into our Student DAO
 
-## 4.2. What about JpaRepository???
+## 4.2. What about JpaRepository?
 
 - Spring Data JPA has a `JpaRepository` interface.
 - This provides JPA database access with **minimal coding**.
@@ -355,3 +378,195 @@
   - The SQL scripts can be customized and fine-tuned for complex database designs.
   - The SQL scripts can be version-controlled.
   - Can also work with schema migration tools such as [liquibase](https://www.liquibase.com/) and [flyway](https://www.red-gate.com/products/flyway/community/).
+
+# 9. Advanced Mappings
+
+- One-to-One.
+- One-to-Many, Many-to-One.
+- Many-to-Many.
+
+## 9.1. One-to-One
+
+- An `Teacher` can have an `Teacher Detail` entity.
+- Similar to an **Teacher Profile**.
+  ![One-to-One](/Images/OneToOne.png)
+
+## 9.2. One-to-Many
+
+- An `Teacher` can have many `Subjects`.
+  ![One-to-Many](/Images/OneToMany.png)
+- Bi-Directional
+
+### 9.2.1. Many-to-One
+
+- Inverse / opposite of One-to-Many.
+
+## 9.3. Many-to-Many
+
+- A `Subject` can have many `Students`.
+- A `Student` can have many `Subjects`.
+  ![Many-to-Many](/Images/ManyToMany.png)
+
+# 10. Important Database Concepts
+
+- Primary key and foreign key.
+- Cascade.
+
+## 10.1. Primary Key and Foreign Key
+
+- **Primary key:** Identify a unique row in a table.
+- **Foreign key**
+  - Link tables together a field in one table that refers to **primary key** in another table.
+- Main purpose is to preserve relationship between tables.
+  - Referential Integrity.
+- Prevents operations that would destroy relationship.
+- Ensures only valid data is inserted into the foreign key column.
+  - Can only contain valid reference to primary key in other table.
+
+![Foreign Key](/Images/ForeignKey.png)
+
+## 10.2. Cascade
+
+- You can `cascade` operations.
+- Apply the same operation to related entities.
+- If we delete an `teacher`, we should also delete their `teacher_detail`.
+- This is known as **CASCADE DELETE**.
+  ![Cascade Delete](/Images/CascadeDelete.png)
+- **Cascade delete DEPENDS on the use case.**
+- Developer can configure cascading.
+
+### 10.2.1. Cascade Types
+
+| Cascade Type | Description                                                                                   |
+| ------------ | --------------------------------------------------------------------------------------------- |
+| PERSIST      | If entity is persisted / saved, related entity will also be persisted.                        |
+| REMOVE       | If entity is removed / deleted, related entity will also be deleted.                          |
+| REFRESH      | If entity is refreshed, related entity will also be refreshed.                                |
+| DETACH       | If entity is detached (not associated w/ session), then related entity will also be detached. |
+| MERGE        | If entity is merged, then related entity will also be merged.                                 |
+| ALL          | All of above cascade types.                                                                   |
+
+## 10.3. Fetch Types: Eager vs Lazy Loading
+
+- **Eager:** Will retrieve everything.
+  - Eager loading will load all dependent entities.
+    - Load `teacher` and all of their `subjects` at once.
+- **Lazy:** Will retrieve on request.
+
+## 10.4. Fetch
+
+- When we define the mapping relationship.
+  - We can specify the fetch type: **EAGER** or **LAZY**.
+- **Example**
+  ```java
+    @Entity
+    @Table(name="teacher")
+    public class Teacher {
+      ...
+      @OneToMany(fetch=FetchType.LAZY, mappedBy="teacher")
+      private List<Subject> subjects;
+      ...
+    }
+  ```
+
+## 10.5. Default Fetch Types
+
+| Mapping     | Default Fetch Type |
+| ----------- | ------------------ |
+| @OneToOne   | FetchType.EAGER    |
+| @OneToMany  | FetchType.LAZY     |
+| @ManyToOne  | FetchType.EAGER    |
+| @ManyToMany | FetchType.LAZY     |
+
+## 10.6. Overriding Default Fetch Type
+
+- Specifying the fetch type, overrides the defaults:
+  ```java
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="teacher_id")
+    private Teacer teacher;
+  ```
+- When you lazy load, the data is only retrieved on demand.
+- However, this requires an open JPA/Hibernate session.
+- Need an connection to database to retrieve data.
+- **If the Hibernate session is closed.**
+  - And you attempt to retrieve lazy data.
+  - Hibernate will throw an exception.
+
+### 10.6.1. Best Practice
+
+- Only load data when absolutely needed.
+- Prefer **Lazy loading** instead of **Eager loading**.
+
+## 10.7. Uni-Directional
+
+![Uni-Directional](/Images/UniDirectional.png)
+
+- If we load an `TeacherDetail`.
+  - Then we'd like to get the associated Teacher.
+  - Can't do this with current uni-directional relationship.
+  - **Bi-Directional** relationship is the solution.
+- We can start with `TeacherDetail` and make it back to the Teacher.
+
+## 10.8. Bi-Directional
+
+![Bi-Directional](/Images/BiDirectional.png)
+
+# 11. Entity Lifecycle
+
+| Operations | Description                                                                        |
+| ---------- | ---------------------------------------------------------------------------------- |
+| Detach     | If entity is detached, it is not associated with a Hibernate session.              |
+| Merge      | If instance is detached from session, then merge will reattach to session.         |
+| Persist    | Transitions new instances to managed state. Next flush / commit will save in db.   |
+| Remove     | Transitions managed entity to be removed. Next flush / commit will delete from db. |
+| Refresh    | Reload / synch object with data from db. Prevents stale data.                      |
+
+## 11.1. Entity Lifecycle - session method calls
+
+- Search about...
+
+# 12. More on mappedBy
+
+- `mappedBy` tells JPA/Hibernate:
+
+  - Look at the `teacherDetail` property in the `Teacher` class.
+  - Use information from the `Teacher` class `@JoinColumn`.
+  - To help find associated teacher.
+  - **Example**
+    ```java
+      public class Teacher {
+        ...
+        @OneToOne(cascade=CascadeType.ALL)
+        @JoinColumn(name="teacher_detail_id")
+        private TeacherDetail teacherDetail;
+        ...
+      }
+    ```
+
+# 13. Fetch Type
+
+# 14. @JoinTable
+
+- `@JoinTable` tells Hibernate:
+  - Look at the `student_id` column in the `subject_student` table.
+  - For other side (inverse), look at the `subject_id` column in the `subject_student` table.
+  - Use this information to find relationship between student and subject.
+
+## 14.1. More on "inverse"
+
+- In this context, we are defining the relationship in the `Student` class.
+- The `Subject` class is on the **other side** ... so it is considered the **inverse**.
+- "Inverse" refers to the **other side** of the relationship.
+
+# 15. Common Errors
+
+- **Error:** `org.hibernate.TransientPropertyValueException: object references an unsaved transient instance - save the transient instance before flushing : com.example.real_jpa_entity_relationships.models.Teacher.teacherDetail -> com.example.real_jpa_entity_relationships.models.TeacherDetail`
+  - **Solution:** Forgot `CascadeType.ALL` or `CascadeType.PERSIST`.
+- **Error:** Infinite recursion stackoverflow problem, this happens as it's going to convert the Java Object into a JSON Object.
+  - **Solution**
+  ```java
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Subject> subjects;
+  ```

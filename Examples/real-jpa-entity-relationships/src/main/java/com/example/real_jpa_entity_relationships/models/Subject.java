@@ -2,8 +2,11 @@ package com.example.real_jpa_entity_relationships.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(name = "discipline")
+@Table(name = "subject")
 public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,25 +19,19 @@ public class Subject {
     @Column(name = "hours")
     private int hours;
 
-    @ManyToOne()
-    @JoinColumn(name = "teacherId")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "teacher_id", referencedColumnName = "id")
     private Teacher teacher;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(
-//            name = "discipline_student",
-//            joinColumns = @JoinColumn(name = "discipline_id"),
-//            inverseJoinColumns = @JoinColumn(name = "student_id")
-//    )
-//    private List<Student> students;
+    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
+    private List<SubjectStudent> subjectStudents = new ArrayList<>();
 
     public Subject() {
     }
 
-    public Subject(String name, int hours, Teacher teacher) {
+    public Subject(String name, int hours) {
         this.name = name;
         this.hours = hours;
-        this.teacher = teacher;
     }
 
     public int getId() {
@@ -69,14 +66,4 @@ public class Subject {
         this.teacher = teacher;
     }
 
-    @Override
-    public String toString() {
-        return "Discipline{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", hours=" + hours +
-                ", teacher=" + teacher +
-//                ", students=" + students +
-                '}';
-    }
 }

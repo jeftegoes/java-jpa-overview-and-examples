@@ -21,7 +21,7 @@ public class SubjectRepository {
 
 
     public List<Subject> getAll() {
-        TypedQuery<Subject> query = entityManager.createQuery("SELECT d FROM Discipline d", Subject.class);
+        TypedQuery<Subject> query = entityManager.createQuery("SELECT d FROM Subject d", Subject.class);
 
         return query.getResultList();
     }
@@ -49,11 +49,9 @@ public class SubjectRepository {
     @Transactional
     public void update(int id, Subject subject) {
         Subject subjectInDb = entityManager.find(Subject.class, id);
-        Teacher teacher = entityManager.find(Teacher.class, subject.getTeacher().getId());
 
         subjectInDb.setName(subject.getName());
         subjectInDb.setHours(subject.getHours());
-        subjectInDb.setTeacher(teacher);
 
         entityManager.merge(subjectInDb);
     }

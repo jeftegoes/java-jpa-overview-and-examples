@@ -17,14 +17,4 @@ public class SubjectStudentController {
     public void save(@PathVariable int studentId, @PathVariable int subjectId) {
         subjectStudentRepository.save(studentId, subjectId);
     }
-
-    @PutMapping("/{id}")
-    public void update(@PathVariable int id, @RequestBody Subject subject) {
-        subjectStudentRepository.update(id, subject);
-    }
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        subjectStudentRepository.delete(id);
-    }
 }

@@ -16,13 +16,8 @@ public class Student {
     @Column(name = "name")
     private String name;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(
-//            name = "discipline_student",
-//            joinColumns = @JoinColumn(name = "student_id"),
-//            inverseJoinColumns = @JoinColumn(name = "discipline_id")
-//    )
-//    private List<Discipline> disciplines;
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<SubjectStudent> subjectStudents = new ArrayList<>();
 
     public Student() {
     }
@@ -45,29 +40,5 @@ public class Student {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-//    public List<Discipline> getDisciplines() {
-//        return disciplines;
-//    }
-//
-//    public void setDisciplines(List<Discipline> disciplines) {
-//        this.disciplines = disciplines;
-//    }
-//
-//    public void addDiscipline(Discipline discipline) {
-//        if (disciplines == null) {
-//            disciplines = new ArrayList<>();
-//        }
-//
-//        disciplines.add(discipline);
-//    }
-
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
     }
 }

@@ -2,6 +2,9 @@ package com.example.real_jpa_entity_relationships.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "teacher")
 public class Teacher {
@@ -20,11 +23,11 @@ public class Teacher {
     private String email;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "detail_id")
+    @JoinColumn(name = "teacher_detail_id", referencedColumnName = "id")
     private TeacherDetail teacherDetail;
 
-//    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
-//    private List<Discipline> disciplines;
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
+    private List<Subject> subjects = new ArrayList<>();
 
     public Teacher() {
 
