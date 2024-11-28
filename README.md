@@ -156,6 +156,20 @@
     spring.datasource.password=Master@123
   ```
   - **No need to give JDBC driver class name Spring Boot will automatically detect it based on URL.**
+- Configuring a DataSource Programmatically
+  ```java
+    @Configuration
+    public class DataSourceConfig {
+        @Bean
+        public DataSource getDataSource() {
+            DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+            dataSourceBuilder.url("jdbc:mysql://localhost:3306/library");
+            dataSourceBuilder.username("root");
+            dataSourceBuilder.password("Master@123");
+            return dataSourceBuilder.build();
+        }
+    }
+  ```
 
 # 3. Entity Class
 
