@@ -1,0 +1,1 @@
+INSERT INTO book (name, price) VALUES ("Bible", 12.3)
