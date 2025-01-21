@@ -28,6 +28,7 @@
     </scm>
     <properties>
         <java.version>23</java.version>
+        <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
     </properties>
     <dependencies>
         <dependency>
@@ -69,15 +70,13 @@
                 <version>4.29.2</version>
                 <configuration>
                     <changeLogFile>src/main/resources/db/changelog/changelog.xml</changeLogFile>
-                    <diffChangeLogFile>src/main/resources/db/changelog/changelog.VERSION.xml</diffChangeLogFile>
+                    <diffChangeLogFile>src/main/resources/db/changelog/changelog.${maven.build.timestamp}.xml
+                    </diffChangeLogFile>
                     <driver>com.mysql.cj.jdbc.Driver</driver>
                     <url>jdbc:mysql://localhost:3306/school</url>
                     <username>root</username>
                     <password>Master@123</password>
-                    <defaultSchemaName></defaultSchemaName>
-                    <outputChangeLogFile>changelog.xml</outputChangeLogFile>
-                    <changeSetAuthor>Jefteeeee</changeSetAuthor>
-                    <changelogSchemaName>school</changelogSchemaName>
+                    <changeSetAuthor>Jefté</changeSetAuthor>
                     <referenceUrl>hibernate:spring:com.example.models?dialect=org.hibernate.dialect.MySQLDialect
                     </referenceUrl>
                 </configuration>
