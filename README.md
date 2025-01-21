@@ -56,9 +56,10 @@
   - [11.1. Entity Lifecycle - session method calls](#111-entity-lifecycle---session-method-calls)
 - [12. More on mappedBy](#12-more-on-mappedby)
 - [13. Fetch Type](#13-fetch-type)
-- [14. @JoinTable](#14-jointable)
-  - [14.1. More on "inverse"](#141-more-on-inverse)
-- [15. Common Errors](#15-common-errors)
+- [14. Dialects](#14-dialects)
+- [15. @JoinTable](#15-jointable)
+  - [15.1. More on "inverse"](#151-more-on-inverse)
+- [16. Common Errors](#16-common-errors)
 
 # 1. What is Hibernate?
 
@@ -560,20 +561,30 @@
 
 # 13. Fetch Type
 
-# 14. @JoinTable
+# 14. Dialects
+
+| RDBMS                | Dialect (spring.jpa.properties.hibernate.dialect) | Driver (spring.datasource.driver-class-name) |
+| -------------------- | ------------------------------------------------- | -------------------------------------------- |
+| MySQL                | org.hibernate.dialect.MySQLDialect                | com.mysql.cj.jdbc.Driver                     |
+| PostgreSQL           | org.hibernate.dialect.PostgreSQLDialect           | org.postgresql.Driver                        |
+| Microsoft SQL Server | org.hibernate.dialect.SQLServerDialect            | com.microsoft.sqlserver.jdbc.SQLServerDriver |
+
+- [Others](https://www.javatpoint.com/dialects-in-hibernate)
+
+# 15. @JoinTable
 
 - `@JoinTable` tells Hibernate:
   - Look at the `student_id` column in the `subject_student` table.
   - For other side (inverse), look at the `subject_id` column in the `subject_student` table.
   - Use this information to find relationship between student and subject.
 
-## 14.1. More on "inverse"
+## 15.1. More on "inverse"
 
 - In this context, we are defining the relationship in the `Student` class.
 - The `Subject` class is on the **other side** ... so it is considered the **inverse**.
 - "Inverse" refers to the **other side** of the relationship.
 
-# 15. Common Errors
+# 16. Common Errors
 
 - **Error:** `org.hibernate.TransientPropertyValueException: object references an unsaved transient instance - save the transient instance before flushing : com.example.real_jpa_entity_relationships.models.Teacher.teacherDetail -> com.example.real_jpa_entity_relationships.models.TeacherDetail`
   - **Solution:** Forgot `CascadeType.ALL` or `CascadeType.PERSIST`.

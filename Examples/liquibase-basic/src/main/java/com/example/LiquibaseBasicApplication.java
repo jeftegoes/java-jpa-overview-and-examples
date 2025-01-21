@@ -1,4 +1,4 @@
-package com.example.liquibase_basic;
+package com.example;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
