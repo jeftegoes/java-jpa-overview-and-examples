@@ -1,7 +1,7 @@
-package com.example.real_jpa_entity_relationships.controllers;
+package com.example.controllers;
 
-import com.example.real_jpa_entity_relationships.models.Teacher;
-import com.example.real_jpa_entity_relationships.repositories.TeacherRepository;
+import com.example.models.Teacher;
+import com.example.repositories.TeacherRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.real_jpa_entity_relationships.models;
+package com.example.models;
 
 import jakarta.persistence.*;
 
@@ -22,11 +22,11 @@ public class Teacher {
     @Column(name = "email")
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "teacher_detail_id", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "teacher_detail_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_teacher_teacher_detail_teacher_detail_id"))
     private TeacherDetail teacherDetail;
 
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "teacher")
     private List<Subject> subjects = new ArrayList<>();
 
     public Teacher() {

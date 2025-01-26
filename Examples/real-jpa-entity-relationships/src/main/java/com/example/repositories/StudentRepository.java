@@ -1,6 +1,6 @@
-package com.example.real_jpa_entity_relationships.repositories;
+package com.example.repositories;
 
-import com.example.real_jpa_entity_relationships.models.Student;
+import com.example.models.Student;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;

@@ -1,9 +1,8 @@
-package com.example.real_jpa_entity_relationships.controllers;
+package com.example.controllers;
 
-import com.example.real_jpa_entity_relationships.models.Subject;
-import com.example.real_jpa_entity_relationships.models.SubjectStudent;
-import com.example.real_jpa_entity_relationships.models.Teacher;
-import com.example.real_jpa_entity_relationships.repositories.SubjectStudentRepository;
+import com.example.models.SubjectStudent;
+import com.example.repositories.SubjectStudentRepository;
+import com.example.repositories.Test;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,14 +11,16 @@ import java.util.List;
 @RequestMapping("/subject_student")
 public class SubjectStudentController {
     private final SubjectStudentRepository subjectStudentRepository;
+    private final Test test;
 
-    public SubjectStudentController(SubjectStudentRepository subjectStudentRepository) {
+    public SubjectStudentController(SubjectStudentRepository subjectStudentRepository, Test test) {
         this.subjectStudentRepository = subjectStudentRepository;
+        this.test = test;
     }
 
     @GetMapping("/")
     public List<SubjectStudent> getAll() {
-        List<SubjectStudent> subjectStudent = subjectStudentRepository.getAll();
+        List<SubjectStudent> subjectStudent = test.findAll();
 
         return subjectStudent;
     }

@@ -1,9 +1,8 @@
-package com.example.real_jpa_entity_relationships.repositories;
+package com.example.repositories;
 
-import com.example.real_jpa_entity_relationships.models.Subject;
-import com.example.real_jpa_entity_relationships.models.Student;
-import com.example.real_jpa_entity_relationships.models.SubjectStudent;
-import com.example.real_jpa_entity_relationships.models.Teacher;
+import com.example.models.Subject;
+import com.example.models.Student;
+import com.example.models.SubjectStudent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
@@ -46,11 +45,9 @@ public class SubjectStudentRepository {
     @Transactional
     public void update(int id, SubjectStudent subjectStudent) {
         SubjectStudent subjectStudentInDb = entityManager.find(SubjectStudent.class, id);
-        Subject subject = entityManager.find(Subject.class, subjectStudent.getSubject().getId());
-        Student student = entityManager.find(Student.class, subjectStudent.getStudent().getId());
 
-        subjectStudentInDb.setSubject(subject);
-        subjectStudentInDb.setStudent(student);
+        subjectStudentInDb.setStudentId(subjectStudent.getStudentId());
+        subjectStudentInDb.setSubjectId(subjectStudent.getSubjectId());
 
         entityManager.merge(subjectStudentInDb);
     }

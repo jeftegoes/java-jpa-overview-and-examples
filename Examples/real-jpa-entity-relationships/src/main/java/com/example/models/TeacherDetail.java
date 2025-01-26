@@ -1,4 +1,4 @@
-package com.example.real_jpa_entity_relationships.models;
+package com.example.models;
 
 import jakarta.persistence.*;
 
