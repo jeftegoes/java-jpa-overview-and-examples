@@ -2,7 +2,6 @@ package com.example.controllers;
 
 import com.example.models.SubjectStudent;
 import com.example.repositories.SubjectStudentRepository;
-import com.example.repositories.Test;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,16 +10,14 @@ import java.util.List;
 @RequestMapping("/subject_student")
 public class SubjectStudentController {
     private final SubjectStudentRepository subjectStudentRepository;
-    private final Test test;
 
-    public SubjectStudentController(SubjectStudentRepository subjectStudentRepository, Test test) {
+    public SubjectStudentController(SubjectStudentRepository subjectStudentRepository) {
         this.subjectStudentRepository = subjectStudentRepository;
-        this.test = test;
     }
 
     @GetMapping("/")
     public List<SubjectStudent> getAll() {
-        List<SubjectStudent> subjectStudent = test.findAll();
+        List<SubjectStudent> subjectStudent = this.subjectStudentRepository.getAll();
 
         return subjectStudent;
     }
