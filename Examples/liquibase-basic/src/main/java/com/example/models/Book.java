@@ -2,6 +2,8 @@ package com.example.models;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "book")
 public class Book {
@@ -19,6 +21,9 @@ public class Book {
     @Column(name = "isbn")
     private String isbn;
 
-    @Column(name = "price", columnDefinition = "DECIMAL(16,2)")
-    private Double price;
+    @Column(name = "price", precision = 10, scale = 2)
+    private BigDecimal price;
+
+    @Column(name = "rating")
+    private int rating;
 }
