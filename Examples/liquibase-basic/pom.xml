@@ -28,6 +28,10 @@
     </scm>
     <properties>
         <java.version>17</java.version>
+        <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
+        <liquibase-core.version>4.32.0</liquibase-core.version>
+        <jakarta.validation-api.version>3.1.1</jakarta.validation-api.version>
+        <liquibase-hibernate6.version>4.32.0</liquibase-hibernate6.version>
     </properties>
     <dependencies>
         <dependency>
@@ -42,6 +46,7 @@
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
@@ -55,10 +60,9 @@
         <dependency>
             <groupId>org.liquibase.ext</groupId>
             <artifactId>liquibase-hibernate6</artifactId>
-            <version>4.32.0</version>
+            <version>${liquibase-hibernate6.version}</version>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -66,65 +70,31 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
-                <!-- Basic information to get Liquibase plugin:
-                include <groupId>, <artifactID>, and <version> elements -->
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>4.32.0</version>
                 <configuration>
-                    <!--                    <changeLogFile>src/main/resources/db/master.xml</changeLogFile>-->
-                    <!--                    <propertyFile>liquibase.properties</propertyFile>-->
-                    <!--                    &lt;!&ndash; The current database to compare with &ndash;&gt;-->
-                    <!--                    <url>jdbc:mysql://localhost:3306/liquibasetest</url>-->
-                    <!--                    <username>root</username>-->
-                    <!--                    <password>Master@123</password>-->
-                    <!--                    <driver>com.mysql.cj.jdbc.Driver</driver>-->
-                    <!--                    <liquibaseSchemaName>liquibasetest</liquibaseSchemaName>-->
+                    <changeLogFile>src/main/resources/db/master.xml</changeLogFile>
+                    <diffChangeLogFile>src/main/resources/db/changelog/${maven.build.timestamp}_changelog.xml
+                    </diffChangeLogFile>
+                    <outputChangeLogFile>src/main/resources/db/changelog/${maven.build.timestamp}_changelog.xml
+                    </outputChangeLogFile>
 
-                    <!--                    &lt;!&ndash; The JPA entities (reference DB) &ndash;&gt;-->
-                    <!--                    <referenceUrl>hibernate:spring:com.example.models?dialect=org.hibernate.dialect.MySQL8Dialect</referenceUrl>-->
-                    <!--                    <dialect>org.hibernate.dialect.MySQL8Dialect</dialect>-->
-                    <!--                    <referenceDriver>liquibase.ext.hibernate.database.connection.HibernateDriver</referenceDriver>-->
-                    <!--                    <referenceDefaultSchemaName>hibernate</referenceDefaultSchemaName>-->
-
-                    <!--                    <changeLogFile>src/main/resources/db/master.xml</changeLogFile>-->
-
-                    <!--                    &lt;!&ndash; Output file &ndash;&gt;-->
-                    <!--                    <diffChangeLogFile>src/main/resources/db/changelog/generated-changelog.xml</diffChangeLogFile>-->
-                    <!--                    <verbose>true</verbose>-->
-                    <!--                    <logging>debug</logging>-->
-
-                    <!--                    https://enji.systems/2023/11/23/liquibase-generate-diff.html-->
-                    <changeLogFile>src/main/resources/db/changelog.xml</changeLogFile>
-                    <diffChangeLogFile>src/main/resources/db/changelogs/changelog.VERSION.xml</diffChangeLogFile>
                     <driver>com.mysql.cj.jdbc.Driver</driver>
                     <url>jdbc:mysql://localhost:3306/liquibasetest</url>
                     <username>root</username>
                     <password>Master@123</password>
+
                     <referenceUrl>hibernate:spring:com.example.models?dialect=org.hibernate.dialect.MySQL8Dialect
                     </referenceUrl>
                     <verbose>true</verbose>
+                    <logging>debug</logging>
                 </configuration>
                 <dependencies>
-                    <dependency>
-                        <groupId>org.liquibase</groupId>
-                        <artifactId>liquibase-core</artifactId>
-                        <version>4.32.0</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.liquibase.ext</groupId>
-                        <artifactId>liquibase-hibernate6</artifactId>
-                        <version>4.32.0</version>
-                    </dependency>
                     <dependency>
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-starter-data-jpa</artifactId>
                         <version>3.5.0</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>jakarta.validation</groupId>
-                        <artifactId>jakarta.validation-api</artifactId>
-                        <version>3.1.1</version>
                     </dependency>
                 </dependencies>
             </plugin>

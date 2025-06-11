@@ -13,6 +13,12 @@ public class Book {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "price")
-    private float price;
+    @Column(name = "author")
+    private String author;
+
+    @Column(name = "isbn")
+    private String isbn;
+
+    @Column(name = "price", columnDefinition = "DECIMAL(16,2)")
+    private Double price;
 }
