@@ -25,7 +25,7 @@ public class Student {
     @Column(name = "name")
     private String name;
 
-    @JsonManagedReference
+//    @JsonManagedReference
     @OneToMany(mappedBy = "student")
     private List<SubjectStudent> subjectStudents = new ArrayList<>();
 }

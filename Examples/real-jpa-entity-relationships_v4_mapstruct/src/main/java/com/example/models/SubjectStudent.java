@@ -26,7 +26,7 @@ public class SubjectStudent {
 
     @ManyToOne
     @JoinColumn(name = "subject_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_subject_student_subject_subject_id"), insertable = false, updatable = false)
-    @JsonIgnoreProperties("subjectStudents")
+//    @JsonIgnoreProperties("subjectStudents")
     private Subject subject;
 
     @Column(name = "student_id")
@@ -34,6 +34,6 @@ public class SubjectStudent {
 
     @ManyToOne
     @JoinColumn(name = "student_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_subject_student_student_student_id"), insertable = false, updatable = false)
-    @JsonIgnoreProperties("subjectStudents")
+//    @JsonIgnoreProperties("subjectStudents")
     private Student student;
 }
